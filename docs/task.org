@@ -1,0 +1,6 @@
+* resetes
+** estilo
+   pagina con titulos verdes y fondo blanco
+** resetas publicas y privadas
+** buscador
+** plantear el libro de resetas como base
