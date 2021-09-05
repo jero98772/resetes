@@ -4,3 +4,6 @@
 ** resetas publicas y privadas
 ** buscador
 ** plantear el libro de resetas como base
+* referencias
+
+https://stackoverflow.com/questions/5669905/sqlite-with-encryption-password-protection

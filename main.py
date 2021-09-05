@@ -11,10 +11,8 @@ app = Flask(__name__)
 app.secret_key = str(enPassowrdHash(generatePassword()))
 DBPATH = "data/"
 DBNAMEGAS = DBPATH + "gas_db"
-TABLEGAS = "gastos"
-GASLOGINTABLE = "logingastos"
-DATANAMEGAS = ["item","category","thread","price","amount","date"]
-class gas():
+TABLEGAS = ""
+class resetes():
 	WEBPAGE = "/"
 	@app.route(WEBPAGE+"user_register.html", methods = ['GET','POST'])
 	def register():
