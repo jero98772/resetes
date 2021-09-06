@@ -8,13 +8,12 @@ from flask import Flask, render_template, request, flash, redirect ,session
 from tools.dbInteracion import dbInteracion
 from tools.tools import *
 app = Flask(__name__)
-app.secret_key = str(enPassowrdHash(generatePassword()))
 DBPATH = "data/"
 DBNAMEGAS = DBPATH + "gas_db"
 TABLEGAS = ""
 class resetes():
 	WEBPAGE = "/"
-	@app.route(WEBPAGE+"user_register.html", methods = ['GET','POST'])
+	@app.route(WEBPAGE+"register.html", methods = ['GET','POST'])
 	def register():
 		if request.method == 'POST':
 			pwd = request.form["pwd"]
@@ -33,69 +32,10 @@ class resetes():
 						session['encpwd'] = encpwd
 					except db.userError():
 						return "invalid user , please try with other username and password"		
-		return render_template("user_register.html")
-	@app.route(WEBPAGE)
-	def gasinfo():
-		return render_template("gasinfo.html")
-	@app.route(WEBPAGE+"gas.html", methods = ['GET','POST'])
-	def gas():
-		priceCol = "price"
-		data = []
-		db = dbInteracion(DBNAMEGAS)
-		timenow = hoyminsStr()
-		if not session.get('loged'):
-			return render_template('gas_login.html')	
-		else:
-			user = session.get('user')
-			encpwd = session.get('encpwd')
-			db.connect(TABLEGAS+user)
-			item_id =  db.getID()
-			rows = db.getDataGas()
-			keys = len(DATANAMEGAS)*[encpwd]
-			pricesum = 0
-			decdata =[]
-			i = 0
-			for row in rows:
-				decdata.append([concatenateStrInList(item_id[i])]+list(map(decryptAES,row,keys)))
-				pricesum += float(decdata[i][4])*float(decdata[i][5])
-				i += 1
-			try :
-				priceavg = pricesum / len(rows)
-			except :
-				priceavg = "no data" 
-			if request.method == 'POST':
-				data = multrequest(DATANAMEGAS)
-				data = list(map(encryptAES , data, keys))
-				data = list(map(str , data))
-				db.addGas(DATANAMEGAS,data)
-				return redirect("gas.html")
-			return render_template("gas.html",purchases = decdata,now=timenow,sum=pricesum,avg=priceavg)	
-	"""
-	@app.route(WEBPAGE+'gas/threads.html', methods = ['GET','POST'])
-	def gasThreads():
-		threadsNames = []
-		user = session.get('user')
-		encpwd = session.get('encpwd')
-		keys = len(DATANAMEGAS)*[encpwd]
-		db = dbInteracion(DBNAMEGAS)
-		db.connect(TABLEGAS+user)
-		threads = db.getDistinctColumnGAS("thread")
-		threads = list(map(decryptAES,threads,keys))
-		for thread in threads:
-			if thread not in threadsNames:
-				threadsNames.append(thread)
-		return render_template("gas_threads.html" , threads = threadsNames)
-	@app.route(WEBPAGE+'gas/filter<string:thread>', methods = ['GET','POST'])
-	def gasFilter(thread):
-		user = session.get('user')
-		db = dbInteracion(DBNAMEGAS)
-		db.connect(TABLEGAS+user)
-		threads = db.getDistinctWhere(thread)
-		pricesum = db.getSum(priceCol)
-		priceavg = db.getAvg(priceCol)
-		threadName = thread
-		return render_template("thread.html" ,threads = threads , threadName = threadName)
-	"""
+		return render_template("register.html")
+	@app.route(WEBPAGE+"resetes.html", methods = ['GET','POST'])
+	def resetes():
+		return render_template(".html")	
 	@app.route(WEBPAGE+"gas_login.html", methods=['GET', 'POST'])
 	def gaslogin():	
 		usr = request.form['username']
