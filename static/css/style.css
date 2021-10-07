@@ -1,6 +1,6 @@
 body {
-  background-color: rgba(0,0,0,0.5);
-color: orange;
+  background-color: #CFD8DC;
+  color:#43A047;
 }
 * {
   margin:0px;
@@ -8,7 +8,7 @@ color: orange;
 
 }
 .bar li a {
-  background-color:orange;
+  background-color:#43A047;
   color:white;
   text-decoration:none;
   padding:10px 13.9px;
@@ -17,24 +17,13 @@ color: orange;
 .bar li a:hover {
   background-color:yellow;
 }
-
 .bar > li {
   float:left;
 }
 ul, ol {
   list-style:none;
 }
-/*
-#headerbar {
-  margin:auto;
-  width:100%;
-  font-size: 14px;
-  background-color: : yellow;/*background of upper menu
-  color: orange;/*text
-}
-  background-color:green;
-  color:white;
-*/
+
 .codeIt{
   background-color: rgba(0,0,0,0.5);
   width: 90%;
@@ -70,8 +59,11 @@ ul, ol {
  .required{
  	color: red;
  }
- .recipes-titles {
-  text-shadow: 1px 1px 2px white, 0 0 1em blue, 0 0 0.2em blue;
-  color: green;
-  font: 1.5em Georgia, serif;
+ .title {
+ font-size:82px;
+}
+  .columnHead {
+  background-color:#43A047;
+  color:#CFD8DC;
+  width:80%;
 }
