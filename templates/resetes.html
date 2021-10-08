@@ -3,19 +3,6 @@
 <br>
 <center>
 <em>
-
-
-
-
-
-
-
-
-
-
-
-
-
 <p class="title">
 titulo
 <p><input type="text" name="title"></p>
@@ -41,13 +28,16 @@ titulo
 		<th><b>Medida</b></th>
 		<th><b>Ingrediente</b></th>
 		<th><b>Observaciones</b></th>
+		<th><b></b></th>
 	</tr>
 	<tr>
 		<td><input type="text" name="amout"></td>
 		<td><input type="text" name="amoutUnit" placeholder="cdta/gr/ml..."></td>
 		<td><input type="text" name="ingredients"></td>
 		<td><input type="text" name="notes"></td>
+		<td><input type="button" onclick ="addRow()"></td>
 	</tr>
+	<tr id=""></tr>
 </table>
 <br>
 <table class="tablePreparation">
