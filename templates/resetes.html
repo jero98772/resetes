@@ -3,15 +3,64 @@
 <br>
 <center>
 <em>
+
+
+
+
+
+
+
+
+
+
+
+
+
 <p class="title">
-(titulo grande)	
+titulo
+<p><input type="text" name="title"></p>
+<br>
 </p>
 </em>
-<table class="columnHead" border="1">
-	<tr>
+<table border="1">
+	<tr class="columnHead">
 		<th><b>Tipo de plato</b></th>
 		<th><b>N° personas</b></th>
 		<th><b>Procedencia</b></th>
+	</tr>
+	<tr>
+		<td><input type="text" name="typeFood"></td>
+		<td><input type="text" name="amoutPersons"></td>
+		<td><input type="text" name="origin"></td>
+	</tr>
+</table>
+<br>
+<table border="1">
+	<tr class="columnHead">
+		<th><b>Cantidad</b></th>
+		<th><b>Medida</b></th>
+		<th><b>Ingrediente</b></th>
+		<th><b>Observaciones</b></th>
+	</tr>
+	<tr>
+		<td><input type="text" name="amout"></td>
+		<td><input type="text" name="amoutUnit" placeholder="cdta/gr/ml..."></td>
+		<td><input type="text" name="ingredients"></td>
+		<td><input type="text" name="notes"></td>
+	</tr>
+</table>
+<br>
+<table class="tablePreparation">
+	<tr>
+		<th>
+			<p class="preparationTitle">preparacion</p>
+		</th>
+	</tr>
+	<tr>
+		<td>
+			<textarea name="process" rows="10" cols="100">
+			</textarea>
+		</td>
 	</tr>
 </table>
 </center>

@@ -62,8 +62,16 @@ ul, ol {
  .title {
  font-size:82px;
 }
-  .columnHead {
+.columnHead {
   background-color:#43A047;
   color:#CFD8DC;
   width:80%;
+}
+.tablePreparation {
+  width:80%;
+}
+.preparationTitle{
+  text-align: "rigth";
+  color: #4b5320;
+  font-size:35px;
 }
