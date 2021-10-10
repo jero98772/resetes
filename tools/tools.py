@@ -11,10 +11,6 @@ def multrequest(items):
 	values = []
 	for item in items:		
 		item = request.form.get(item)
-		try:
-			item = float(item)
-		except:	
-			item = str(item)
 		values.append(item)
 	return values
 def enPassowrdStrHex(password):
