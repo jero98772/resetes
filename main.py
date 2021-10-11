@@ -12,6 +12,8 @@ DBPATH = "data/"
 DBNAME = DBPATH + "general_use"
 LOGINTABLE = "login"
 class resetes():
+    generalInfoItems=["typeFood","amoutPersons","origin"]
+    ingredients=["amout","amoutUnit","ingredient","notes"]
     WEBPAGE = "/"
     @app.route(WEBPAGE+"resetes.html", methods = ['GET','POST'])
     def resetes():
@@ -22,6 +24,7 @@ class resetes():
             return render_template('login.html')    
         else:
             if request.method == 'POST':
+                pass
         return render_template("add_recipe.html")
     @app.route(WEBPAGE+"resetes.html", methods = ['GET','POST'])
     def publicResipes():
