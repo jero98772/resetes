@@ -1,5 +1,5 @@
 function addRow(){
-var tableid = document.getElementById('ingredients')
+var tableid=document.getElementById('ingredients')
 var table=tableid.getElementsByTagName('table')[0];
 var row=table.insertRow(table.rows.length);
 var cell1=row.insertCell(0);
@@ -11,4 +11,6 @@ cell1.innerHTML="<input type='text' name='amout"+numid+"'>";
 cell2.innerHTML="<input type='text' name='amoutUnit"+numid+"' placeholder='cdta/gr/ml...'>";
 cell3.innerHTML="<input type='text' name='ingredients"+numid+"'>";
 cell4.innerHTML="<input type='text' name='notes"+numid+"'>";
+var counterRows = document.getElementById('amoutRows')
+counterRows.innerHTML=table.rows.length;
 }

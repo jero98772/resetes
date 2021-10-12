@@ -17,15 +17,14 @@ def multRequest(items):
             item = str(item)
         values.append(item)
     return values
-def requestIngredients(items): 
-    values = []
+def requestIngredients(items,amount): 
+    values=[]
+    ii=0
     for item in items:      
-        item = request.form.get(item)
-        try:
-            item = int(item)
-        except: 
-            item = str(item)
-        values.append(item)
+        tmpArray=[]
+        for i in range(0,amount):
+            tmpArray.append(request.form.get(item+str(i)))
+        values.append(str(tmpArray))
     return values
 def enPassowrdStrHex(password):
     password = str(password)

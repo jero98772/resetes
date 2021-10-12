@@ -15,31 +15,34 @@ class resetes():
     generalInfoItems=["typeFood","amoutPersons","origin"]
     ingredients=["amout","amoutUnit","ingredient","notes"]
     WEBPAGE = "/"
-    @app.route(WEBPAGE+"resetes.html", methods = ['GET','POST'])
+    @app.route(WEBPAGE+"resetes.html", methods=['GET','POST'])
     def resetes():
         return render_template("resetes.html")
-    @app.route(WEBPAGE+"resetes.html", methods = ['GET','POST'])
+    @app.route(WEBPAGE+"resetes.html", methods=['GET','POST'])
     def addResipe():
         if not session.get('loged'):
             return render_template('login.html')    
         else:
-            if request.method == 'POST':
-                pass
+            if request.method=='POST':
+                rows=int(request.form['amoutRows'])
+                ingredientsData=requestIngredients(ingredients,rows)
+                generalInfoData=multRequest(generalInfoItems)
+                preparationProcess=request.form['preparationProcess']
         return render_template("add_recipe.html")
-    @app.route(WEBPAGE+"resetes.html", methods = ['GET','POST'])
+    @app.route(WEBPAGE+"resetes.html", methods=['GET','POST'])
     def publicResipes():
         return render_template("public_recipes.html")
     @app.route(WEBPAGE+"login.html", methods=['GET', 'POST'])
     def login():
-        if request.method == 'POST':
-            usr = request.form['username']
-            pwd = request.form["password"]
-            protectpwd = enPassowrdStrHex(pwd)
-            db = dbInteracion(DBNAME)
+        if request.method=='POST':
+            usr=request.form['username']
+            pwd=request.form["password"]
+            protectpwd=enPassowrdStrHex(pwd)
+            db=dbInteracion(DBNAME)
             db.connect(LOGINTABLE)
             if db.findUser(usr) and db.findPassword(protectpwd)  :
-                session['loged'] = True
-                session['user'] = usr
+                session['loged']=True
+                session['user']=usr
                 return redirect("/resetes.html")
             else:
                 flash('Contraseña invalida!')
