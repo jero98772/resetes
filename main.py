@@ -28,6 +28,9 @@ class resetes():
                 ingredientsData=requestIngredients(ingredients,rows)
                 generalInfoData=multRequest(generalInfoItems)
                 preparationProcess=request.form['preparationProcess']
+                print(preparationProcess,generalInfoData,ingredientsData)
+                db=dbInteracion(DBNAME)
+                db.connect(LOGINTABLE)
         return render_template("add_recipe.html")
     @app.route(WEBPAGE+"resetes.html", methods=['GET','POST'])
     def publicResipes():
