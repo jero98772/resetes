@@ -28,7 +28,7 @@ class dbInteracion():
 		insertUser = "INSERT INTO {0}(usr, pwd) VALUES( ?, ? );".format(self.tableName)
 		self.cursor.execute(insertUser,(usr,pwd))
 		self.cursor.connection.commit()
-	def createUser(self,usr,salt="gastos"):
+	def createUser(self,usr,salt="resetes"):
 		dbcomand = 'CREATE TABLE "{0}{1}" ("item_id"	INTEGER,"item"	TEXT,"category"	TEXT,"thread"	TEXT,"price"	REAL,"amount"	INTEGER,"date"	TEXT,PRIMARY KEY("item_id" AUTOINCREMENT));'.format(salt,usr)
 		self.cursor.execute(dbcomand)
 		self.cursor.connection.commit()

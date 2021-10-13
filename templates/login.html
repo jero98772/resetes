@@ -2,19 +2,19 @@
 {% block content %}
 {% if session['loged'] %}
 
-you are logged 
-
+tu ya estas logeado
 {% else %}
+
+
 <center>
-<h1>GAS</h1>
-<p><a href="/gasinfo.html">what is gas ?</a></p>
+<h1>Resetes</h1>
 <h2>login</h2>
-for test can login with
-<h3><b>username:<b>test     <b>pasword:</b>test</h3>
-<form action="/gas_login.html" method="POST">
+para una demostracion use:
+<h3><b>Username:<b>test     <b>Password:</b>test</h3>
+<form action="/login.html" method="POST">
 <input type="username" name="username" placeholder="Username">
 <input type="password" name="password" placeholder="Password">
-<input type="submit" value="Log in">
+<input type="submit" value="Login">
 </form>
 </center>
 {% endif %}

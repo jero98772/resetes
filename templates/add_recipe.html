@@ -5,12 +5,12 @@
 <em>
 <p class="title">
 titulo
+<form method="POST" action="" >
 <p><input type="text" name="title"></p>
 <script type="text/javascript" src="{{ url_for('static', filename='js/tools.js')}}"></script>
 <br>
 </p>
 </em>
-<form method="POST" action="" >
 <div id="generalInfo">	
 	<table border="1" id="table1">
 		<tr class="columnHead">
@@ -36,13 +36,14 @@ titulo
 			<b><input type="button" onclick ="addRow()" value="nueva fila"></b>
 		</tr>
 		<tr>
-			<td><input type="text" name="amout"></td>
-			<td><input type="text" name="amoutUnit" placeholder="cdta/gr/ml..."></td>
-			<td><input type="text" name="ingredients"></td>
-			<td><input type="text" name="notes"></td>
+			<td><input type="text" name="amout1"></td>
+			<td><input type="text" name="amoutUnit1" placeholder="cdta/gr/ml..."></td>
+			<td><input type="text" name="ingredient1"></td>
+			<td><input type="text" name="notes1"></td>
 			
 		</tr>
 	</table>
+<p id="amoutRows" name="amoutRows" hidden></p>
 </div>
 <br>
 <div id="preparation">
@@ -54,12 +55,13 @@ titulo
 		</tr>
 		<tr>
 			<td>
-				<textarea name="process" rows="10" cols="100">
+				<textarea name="preparationProcess" rows="10" cols="100">
 				</textarea>
 			</td>
 		</tr>
 	</table>
 </div>
+<input type="submit" value="enviar reseta" style="height:45px;width:100px">
 </form>
 </center>
 
