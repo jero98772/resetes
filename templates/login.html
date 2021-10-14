@@ -1,8 +1,14 @@
 {% extends  'template.html'%}
 {% block content %}
 {% if session['loged'] %}
+<br>
+<br>
+<br>
+<br>
+<center>
+	<h1>tu ya estas logeado</h1>
+</center>
 
-tu ya estas logeado
 {% else %}
 
 
@@ -12,7 +18,7 @@ tu ya estas logeado
 para una demostracion use:
 <h3><b>Username:<b>test     <b>Password:</b>test</h3>
 <form action="/login.html" method="POST">
-<input type="username" name="username" placeholder="Username">
+<input type="text" name="username" placeholder="Username">
 <input type="password" name="password" placeholder="Password">
 <input type="submit" value="Login">
 </form>

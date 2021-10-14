@@ -18,10 +18,10 @@ class resetes():
     generalInfoItems=["typeFood","amoutPersons","origin"]
     ingredients=["amout","amoutUnit","ingredient","notes"]
     WEBPAGE = "/"
-    @app.route(WEBPAGE+"resetes.html", methods=['GET','POST'])
+    @app.route(WEBPAGE)
     def resetes():
         return render_template("resetes.html")
-    @app.route(WEBPAGE+"resetes.html", methods=['GET','POST'])
+    @app.route(WEBPAGE+"addResetes.html", methods=['GET','POST'])
     def addResipe():
         if not session.get('loged'):
             return render_template('login.html')    
@@ -41,19 +41,34 @@ class resetes():
         return render_template("public_recipes.html")
     @app.route(WEBPAGE+"login.html", methods=['GET', 'POST'])
     def login():
-        #if request.method=='POST':
-        usr=request.form['username']
-        pwd=request.form["password"]
-        protectpwd=enPassowrdStrHex(pwd)
-        db=dbInteracion(DBNAME)
-        db.connect(LOGINTABLE)
-        if db.findUser(usr) and db.findPassword(protectpwd)  :
-            session['loged']=True
-            session['user']=usr
-            return redirect("/resetes.html")
-        else:
-            flash('Contraseña invalida!')
-        return resetes.resetes()
+        try:
+            usr=request.form["username"]
+            pwd=request.form["password"]
+            protectpwd=enPassowrdStrHex(pwd)
+            db=dbInteracion(DBNAME)
+            db.connect(LOGINTABLE)
+            if db.findUser(usr) and db.findPassword(protectpwd)  :
+                session["loged"]=True
+                session["user"]=usr
+                return redirect("/resetes.html")
+            else:
+                flash("Contraseña invalida!")
+            return resetes.resetes()
+        except:
+            if request.method=='POST':
+                usr=request.form["username"]
+                pwd=request.form["password"]
+                protectpwd=enPassowrdStrHex(pwd)
+                db=dbInteracion(DBNAME)
+                db.connect(LOGINTABLE)
+                print(usr,protectpwd)
+                if db.findUser(usr) and db.findPassword(protectpwd)  :
+                    session["loged"]=True
+                    session["user"]=usr
+                    return redirect("/resetes.html")
+                else:
+                    flash("Contraseña invalida!")
+            return render_template('login.html')    
     @app.route(WEBPAGE+"register.html", methods = ['GET','POST'])
     def register():
         if request.method == 'POST':
@@ -67,10 +82,9 @@ class resetes():
                     print(pwd,enPassowrdStrHex(pwd))
                     db.saveUser(usr,enPassowrdStrHex(pwd))
                     try:
-                        del db
-                        db=dbInteracion(USERDB)
-                        db.connect(INITTABLE)
-                        db.createUser(usr,"resetes")
+                        usersdb=dbInteracion(USERDB)
+                        usersdb.connect(INITTABLE)
+                        usersdb.createUser(usr,"resetes")
                         session['loged'] = True
                         session['user'] = usr
                     except db.userError():
