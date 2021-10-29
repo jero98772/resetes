@@ -1,3 +1,19 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 function addRow(){
 var tableid=document.getElementById('ingredients')
 var table=tableid.getElementsByTagName('table')[0];
@@ -13,4 +29,6 @@ cell3.innerHTML="<input type='text' name='ingredients"+numid+"'>";
 cell4.innerHTML="<input type='text' name='notes"+numid+"'>";
 var counterRows = document.getElementById('amoutRows')
 counterRows.innerHTML=table.rows.length;
+counterRows.value=table.rows.length;
+
 }

@@ -14,9 +14,9 @@ LOGINTABLE="login"
 INITTABLE="init"
 app = Flask(__name__)
 app.secret_key = str(enPassowrdHash(generatePassword()))
+ingredients=["amout","amoutUnit","ingredient","notes"]
+generalInfoItems=["typeFood","amoutPersons","origin"]
 class resetes():
-    generalInfoItems=["typeFood","amoutPersons","origin"]
-    ingredients=["amout","amoutUnit","ingredient","notes"]
     WEBPAGE = "/"
     @app.route(WEBPAGE)
     def resetes():

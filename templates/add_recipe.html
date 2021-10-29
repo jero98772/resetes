@@ -5,7 +5,7 @@
 <em>
 <p class="title">
 titulo
-<form method="POST" action="" >
+<form method="POST" action="/addResetes.html" >
 <p><input type="text" name="title"></p>
 <script type="text/javascript" src="{{ url_for('static', filename='js/tools.js')}}"></script>
 <br>
@@ -43,7 +43,7 @@ titulo
 			
 		</tr>
 	</table>
-<p id="amoutRows" name="amoutRows" hidden></p>
+<input type="text"id="amoutRows" name="amoutRows" hidden>
 </div>
 <br>
 <div id="preparation">
@@ -61,6 +61,13 @@ titulo
 		</tr>
 	</table>
 </div>
+<p>
+	publico
+	<label class="switch">
+		<input type="checkbox" name="visibility" value="public">
+		<span class="slider round"></span>
+	</label>
+</p>
 <input type="submit" value="enviar reseta" style="height:45px;width:100px">
 </form>
 </center>
