@@ -11,8 +11,8 @@ DBPATH="data/"
 DBNAME=DBPATH+"general_use"
 USERDB=DBPATH+"general_use"
 LOGINTABLE="login"
-INITTABLE="init"
-app = Flask(__name__)
+TABLESALT="resetes"
+app=Flask(__name__)
 app.secret_key = str(enPassowrdHash(generatePassword()))
 ingredients=["amout","amoutUnit","ingredient","notes"]
 generalInfoItems=["typeFood","amoutPersons","origin"]
@@ -26,6 +26,8 @@ class resetes():
         if not session.get('loged'):
             return redirect("login.html")    
         else:
+            db=dbInteracion(DBNAME)
+            db.connect(TABLESALT+session["user"])
             if request.method=='POST':
                 rows=int(request.form['amoutRows'])
                 ingredientsData=requestIngredients(ingredients,rows)
@@ -33,8 +35,6 @@ class resetes():
                 preparationProcess=request.form['preparationProcess']
                 print("notas de preparacion")
                 print(preparationProcess,generalInfoData,ingredientsData)
-                db=dbInteracion(DBNAME)
-                db.connect(LOGINTABLE)
         return render_template("add_recipe.html")
     @app.route(WEBPAGE+"resetes.html", methods=['GET','POST'])
     def publicResipes():

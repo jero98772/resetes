@@ -29,7 +29,7 @@ class dbInteracion():
 		self.cursor.execute(insertUser,(usr,pwd))
 		self.cursor.connection.commit()
 	def createUser(self,usr,salt="resetes"):
-		dbcomand = 'CREATE TABLE "{0}{1}" ("item_id"	INTEGER,"item"	TEXT,"category"	TEXT,"thread"	TEXT,"price"	REAL,"amount"	INTEGER,"date"	TEXT,PRIMARY KEY("item_id" AUTOINCREMENT));'.format(salt,usr)
+		dbcomand='CREATE TABLE "{0}{1}" ("id"	INTEGER,"typeFood"	TEXT,"amoutPersons"	INTEGER,"origin"	TEXT,"amouts"	TEXT,"amoutUnits"	TEXT,"ingredients"	TEXT,"notes"	TEXT,PRIMARY KEY("id" AUTOINCREMENT));'
 		self.cursor.execute(dbcomand)
 		self.cursor.connection.commit()
 	def findUser(self,user):
@@ -56,27 +56,7 @@ class dbInteracion():
 				return False
 		except:
 			return False
-	def getID(self):
-		dbcomand = " SELECT * FROM {0} ;".format(self.tableName)
-		self.cursor.row_factory = lambda cursor, row: list(str(int(row[0])))#
-		self.cursor.execute(dbcomand)
-		alldata = self.cursor.fetchall()
-		return alldata
-		self.cursor.row_factory = sqlite3.Row
-	def getSum(self,row):
-		dbcomand = " SELECT sum({0}) FROM {1} ;".format(row,self.tableName)
-		self.cursor.execute(dbcomand)
-		alldata = self.cursor.fetchall()
-		return alldata
-	def getAvg(self,column):
-		dbcomand = " SELECT avg({0}) FROM {1} ;".format(column,self.tableName)
-		self.cursor.execute(self.dbcomand)
-		alldata = self.cursor.fetchall()
-		return alldata
-	def deleteWhere(self,column,equals):
-		dbcomand = " DELETE FROM {0} WHERE {1} = {2} ;".format(self.tableName,column,str(equals))
-		self.cursor.execute(dbcomand)
-		self.cursor.connection.commit()
+	
 	def addGas(self,dbItems,data ):
 		dbcomand = str("INSERT INTO {0} {1}  VALUES {2} ;".format(self.tableName,tuple(dbItems),tuple(data)))
 		self.cursor.execute(dbcomand)
