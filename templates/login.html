@@ -20,6 +20,9 @@ para una demostracion use:
 <input type="password" name="password" placeholder="Password">
 <input type="submit" value="Login">
 </form>
+{% if not error=="" %}
+    <div class="required"><p><strong>Error:</strong> {{ error }}</div>
+{% endif %}
 </center>
 {% endif %}
 {% endblock %}

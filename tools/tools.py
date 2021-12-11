@@ -10,11 +10,7 @@ import base64
 def multRequest(items):	
     values = []
     for item in items:		
-        item = request.form.get(item)
-        try:
-            item = int(item)
-        except:	
-            item = str(item)
+        item = str(request.form.get(item))
         values.append(item)
     return values
 def requestIngredients(items,amount): 
@@ -22,7 +18,7 @@ def requestIngredients(items,amount):
     ii=0
     for item in items:      
         tmpArray=[]
-        for i in range(0,amount):
+        for i in range(1,amount):
             tmpArray.append(request.form.get(item+str(i)))
         values.append(str(tmpArray))
     return values

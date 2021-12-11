@@ -17,7 +17,6 @@ class dbInteracion():
 		dbcomand =  "SELECT * FROM {0} WHERE {1} =  '{2}' ".format(self.tableName,item,user)
 		self.cursor.execute(dbcomand)
 		users = self.cursor.fetchall()
-		print(users)
 		if (user in users) and (pwd in users):
 			return False
 		else:
@@ -29,7 +28,7 @@ class dbInteracion():
 		self.cursor.execute(insertUser,(usr,pwd))
 		self.cursor.connection.commit()
 	def createUser(self,usr,salt="resetes"):
-		dbcomand='CREATE TABLE "{0}{1}" ("id"	INTEGER,"typeFood"	TEXT,"amoutPersons"	INTEGER,"origin"	TEXT,"amouts"	TEXT,"amoutUnits"	TEXT,"ingredients"	TEXT,"notes"	TEXT,PRIMARY KEY("id" AUTOINCREMENT));'
+		dbcomand='CREATE TABLE "{0}{1}" ("id"	INTEGER,"title"	TEXT,"typeFood"	TEXT,"amoutPersons"	INTEGER,"origin"	TEXT,"amouts"	TEXT,"amoutUnits"	TEXT,"ingredients"	TEXT,"notes"	TEXT,PRIMARY KEY("id" AUTOINCREMENT));'
 		self.cursor.execute(dbcomand)
 		self.cursor.connection.commit()
 	def findUser(self,user):
@@ -57,18 +56,19 @@ class dbInteracion():
 		except:
 			return False
 	
-	def addGas(self,dbItems,data ):
+	def addRestes(self,dbItems,data ):
 		dbcomand = str("INSERT INTO {0} {1}  VALUES {2} ;".format(self.tableName,tuple(dbItems),tuple(data)))
+		print(dbcomand)
 		self.cursor.execute(dbcomand)
 		self.cursor.connection.commit()
-	def getDataGasWhere(self,row,equals):
+	def getDataResetesWhere(self,row,equals):
 		dbcomand = " SELECT * FROM {0} WHERE {1} = {2} ;".format(self.tableName,row,equals)
 		self.cursor.row_factory = lambda cursor, row: list(row[1:])
 		self.cursor.execute(dbcomand)
 		alldata = self.cursor.fetchall()
 		return alldata
 		self.cursor.row_factory = sqlite3.Row
-	def getDataGas(self):
+	def getData(self):
 		dbcomand = " SELECT * FROM {0} ;".format(self.tableName)
 		self.cursor.row_factory = lambda cursor, row: list(row[1:])
 		self.cursor.execute(dbcomand)
