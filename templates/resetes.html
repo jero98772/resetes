@@ -5,12 +5,16 @@
 <em>
 <p class="title">
 pagina principal
-<form method="POST" action="" >
-<p><input type="text" name="title"></p>
-<script type="text/javascript" src="{{ url_for('static', filename='js/tools.js')}}"></script>
-<br>
 </p>
+<br>
 </em>
+{% for i in data %}
+<hr>
+{{ i }}
+<br>
+<p class="title">
+{{ i.0 }}
+</p>
 <div id="generalInfo">	
 	<table border="1" id="table1">
 		<tr class="columnHead">
@@ -19,9 +23,9 @@ pagina principal
 			<th><b>Procedencia</b></th>
 		</tr>
 		<tr>
-			<td><input type="text" name="typeFood"></td>
-			<td><input type="text" name="amoutPersons"></td>
-			<td><input type="text" name="origin" placeholder="colombia"></td>
+			<td class="tabledata">{{ i.1 }}</td>
+			<td class="tabledata">{{ i.2 }}</td>
+			<td class="tabledata">{{ i.3 }}</td>
 		</tr>
 	</table>
 </div>
@@ -33,17 +37,20 @@ pagina principal
 			<th><b>Medida</b></th>
 			<th><b>Ingrediente</b></th>
 			<th><b>Observaciones</b></th>
-			<b><input type="button" onclick ="addRow()" value="nueva fila"></b>
 		</tr>
-		<tr>
-			<td><input type="text" name="amout1"></td>
-			<td><input type="text" name="amoutUnit1" placeholder="cdta/gr/ml..."></td>
-			<td><input type="text" name="ingredient1"></td>
-			<td><input type="text" name="notes1"></td>
-			
-		</tr>
+		{% set list1 = i.4.split(',') %}
+		{% set list2 = i.5.split(',') %}
+		{% set list3 = i.6.split(',') %}
+		{% set list4 = i.7.split(',') %}
+		{% for ii in range(list3|length) %}
+			<tr>
+				<td class="tabledata">{{ list1.loop }}</td>
+				<td class="tabledata">{{ list2 }}</td>
+				<td class="tabledata">{{ list3 }}</td>
+				<td class="tabledata">{{ list4 }}</td>
+			</tr>
+		{% endfor %}
 	</table>
-<p id="amoutRows" name="amoutRows" hidden></p>
 </div>
 <br>
 <div id="preparation">
@@ -54,15 +61,13 @@ pagina principal
 			</th>
 		</tr>
 		<tr>
-			<td>
-				<textarea name="preparationProcess" rows="10" cols="100">
-				</textarea>
+			<td class="tabledata">
+				{{ i.8 }}
 			</td>
 		</tr>
 	</table>
 </div>
-<input type="submit" value="enviar reseta" style="height:45px;width:100px">
-</form>
+{% endfor %}
 </center>
 
 {% endblock %}

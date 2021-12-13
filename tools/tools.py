@@ -20,7 +20,7 @@ def requestIngredients(items,amount):
         tmpArray=[]
         for i in range(1,amount):
             tmpArray.append(request.form.get(item+str(i)))
-        values.append(str(tmpArray))
+        values.append(str(tmpArray)[1:-1])
     return values
 def enPassowrdStrHex(password):
     password = str(password)

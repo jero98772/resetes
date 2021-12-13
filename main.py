@@ -11,7 +11,7 @@ DBPATH="data/"
 DBNAME=DBPATH+"general_use"
 USERDB=DBPATH+"general_use"
 LOGINTABLE="login"
-TABLESALT="publicResipes"
+TABLE="publicResipes"
 app=Flask(__name__)
 app.secret_key = str(enPassowrdHash(generatePassword()))
 generalInfoItems=["typeFood","amoutPersons","origin"]
@@ -20,15 +20,18 @@ class resetes():
     WEBPAGE = "/"
     @app.route(WEBPAGE)
     def resetes():
+        db=dbInteracion(DBNAME)
+        db.connect(TABLE)
+        data=db.getData()
         #ok,but i need add info and clear html file 
-        return render_template("resetes.html")
+        return render_template("resetes.html",data=data)
     @app.route(WEBPAGE+"addResetes.html", methods=['GET','POST'])
     def addResipe():
         if not session.get('loged'):
             return redirect("login.html")    
         else:
             db=dbInteracion(DBNAME)
-            db.connect(TABLESALT)
+            db.connect(TABLE)
             if request.method=='POST':
                 rows=int(request.form['amoutRows'])
                 title=request.form['title']
