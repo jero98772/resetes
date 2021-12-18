@@ -70,7 +70,7 @@ class dbInteracion():
 		self.cursor.row_factory = sqlite3.Row
 	def getData(self):
 		dbcomand = " SELECT * FROM {0} ;".format(self.tableName)
-		self.cursor.row_factory = lambda cursor, row: list(row[1:])
+		self.cursor.row_factory = lambda cursor, row: list(row[0:])
 		self.cursor.execute(dbcomand)
 		alldata = self.cursor.fetchall()
 		return alldata

@@ -10,11 +10,11 @@ pagina principal
 </em>
 {% for i in data %}
 <hr>
-{{ i }}
 <br>
 <p class="title">
-{{ i.0 }}
+{{ i.1 }}
 </p>
+<h5><a href="{{ i.0 }}">editar</a>  <a href="">eliminar</a></h5>
 <div id="generalInfo">	
 	<table border="1" id="table1">
 		<tr class="columnHead">
@@ -23,9 +23,9 @@ pagina principal
 			<th><b>Procedencia</b></th>
 		</tr>
 		<tr>
-			<td class="tabledata">{{ i.1 }}</td>
 			<td class="tabledata">{{ i.2 }}</td>
 			<td class="tabledata">{{ i.3 }}</td>
+			<td class="tabledata">{{ i.4 }}</td>
 		</tr>
 	</table>
 </div>
@@ -38,16 +38,16 @@ pagina principal
 			<th><b>Ingrediente</b></th>
 			<th><b>Observaciones</b></th>
 		</tr>
-		{% set list1 = i.4.split(',') %}
-		{% set list2 = i.5.split(',') %}
-		{% set list3 = i.6.split(',') %}
-		{% set list4 = i.7.split(',') %}
+		{% set list1 = i.5.split(',') %}
+		{% set list2 = i.6.split(',') %}
+		{% set list3 = i.7.split(',') %}
+		{% set list4 = i.8.split(',') %}
 		{% for ii in range(list3|length) %}
 			<tr>
-				<td class="tabledata">{{ list1.loop }}</td>
-				<td class="tabledata">{{ list2 }}</td>
-				<td class="tabledata">{{ list3 }}</td>
-				<td class="tabledata">{{ list4 }}</td>
+				<td class="tabledata">{{ list1[ii] | replace("'", "")}}</td>
+				<td class="tabledata">{{ list2[ii] | replace("'", "")}}</td>
+				<td class="tabledata">{{ list3[ii] | replace("'", "")}}</td>
+				<td class="tabledata">{{ list4[ii] | replace("'", "")}}</td>
 			</tr>
 		{% endfor %}
 	</table>
@@ -62,7 +62,9 @@ pagina principal
 		</tr>
 		<tr>
 			<td class="tabledata">
-				{{ i.8 }}
+				<br>
+				{{ i.9 }}
+				<br>
 			</td>
 		</tr>
 	</table>

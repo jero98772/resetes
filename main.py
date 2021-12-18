@@ -20,13 +20,14 @@ class resetes():
     WEBPAGE = "/"
     @app.route(WEBPAGE)
     def resetes():
+        #ok
         db=dbInteracion(DBNAME)
         db.connect(TABLE)
         data=db.getData()
-        #ok,but i need add info and clear html file 
         return render_template("resetes.html",data=data)
     @app.route(WEBPAGE+"addResetes.html", methods=['GET','POST'])
     def addResipe():
+        #ok
         if not session.get('loged'):
             return redirect("login.html")    
         else:
@@ -46,11 +47,9 @@ class resetes():
                 print("ingredient",ingredientsData)
                 db.addRestes(["title"]+generalInfoItems+ingredients+["preparationProcess"],[title]+generalInfoData+ingredientsData+[preparationProcess])
         return render_template("add_recipe.html")
-    @app.route(WEBPAGE+"resetes.html", methods=['GET','POST'])
-    def publicResipes():
-        return render_template("public_recipes.html")
     @app.route(WEBPAGE+"login_.html", methods=['GET', 'POST'])
     def loginInterface():
+        #ok
         if not session.get('loged'):
             return redirect("login.html")
         else:
@@ -99,5 +98,42 @@ class resetes():
         session['loged']=False
         session['user']=""
         return redirect("/")
+#to check
+    @app.route(WEBPAGE+'gas/actualisar<string:id>', methods = ['GET','POST'])
+    def update_gas(id):
+        user = session.get('user')
+        db = dbInteracion(DBNAMEGAS)
+        db.connect(TABLEGAS+user)
+        key = session.get('encpwd')
+        keys = len(DATANAMEGAS)*[key]
+        if request.method == 'POST':
+            data = multrequest(DATANAMEGAS)
+            encdata = list(map(encryptAES , data, keys))
+            encdata = list(map(str,encdata))
+            del key,keys,data
+            sentence = setUpdate(DATANAMEGAS,encdata)
+            db.updateGas(sentence,id)
+            flash(' Updated Successfully')
+        return redirect('/gas.html')
+    @app.route(WEBPAGE+'gas/editar<string:id>', methods = ['POST', 'GET'])
+    def get_gas(id):
+        user = session.get('user')
+        db = dbInteracion(DBNAMEGAS)
+        db.connect(TABLEGAS+user)
+        key = session.get('encpwd')
+        keys = len(DATANAMEGAS)*[key]
+        rows = db.getDataGasWhere("item_id",id)[0]
+        idData = [id]+list(map(decryptAES,rows,keys))
+        del key,keys , user , rows
+        return render_template('gas_update.html', purchase = idData )
+    @app.route(WEBPAGE+"gas/eliminar/<string:id>", methods = ['GET','POST'])
+    def gassdelete(id):
+        user = session.get('user')
+        db = dbInteracion(DBNAMEGAS)
+        db.connect(TABLEGAS+user)
+        db.deleteWhere("item_id",id)
+        #flash('you delete that')
+        return redirect('/gas.html')
+#finish cheking
 if __name__=='__main__':
-    app.run(debug=True,host="0.0.0.0",port=9600)
+    app.run(debug=True,host="127.0.0.1",port=9600)
