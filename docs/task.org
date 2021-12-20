@@ -7,3 +7,9 @@
 * referencias
 
 https://stackoverflow.com/questions/5669905/sqlite-with-encryption-password-protection
+* TODOS
+** ortografia
+** todo español
+** terminar edit
+** boostrap
+** añadir restas

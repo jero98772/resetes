@@ -4,9 +4,11 @@
 resetes - 2021 - por jero98772
 resetes - 2021 - by jero98772
 """
-from flask import Flask, render_template, request, flash, redirect ,session
+from flask import Flask, render_template, request, flash, redirect ,session,render_template_string
 from tools.dbInteracion import dbInteracion
 from tools.tools import *
+
+global WEBPAGE
 DBPATH="data/"
 DBNAME=DBPATH+"general_use"
 USERDB=DBPATH+"general_use"
@@ -16,8 +18,9 @@ app=Flask(__name__)
 app.secret_key = str(enPassowrdHash(generatePassword()))
 generalInfoItems=["typeFood","amoutPersons","origin"]
 ingredients=["amout","amoutUnit","ingredient","notes"]
+WEBPAGE="/"
+dbitems=["title"]+generalInfoItems+ingredients+["preparationProcess"]+["user"]
 class resetes():
-    WEBPAGE = "/"
     @app.route(WEBPAGE)
     def resetes():
         #ok
@@ -40,12 +43,14 @@ class resetes():
                 generalInfoData=multRequest(generalInfoItems)
                 ingredientsData=requestIngredients(ingredients,rows)
                 print("\n",ingredients,rows,"\n")
-                preparationProcess=request.form['preparationProcess']
+                #remvomeChars=maketrans("\n\t\r","   ")
+                #request.form['preparationProcess']#.translate(remvomeChars)
+
                 print("titulo",title)
                 print("notas de preparacion",preparationProcess)
                 print("general info",generalInfoData)
                 print("ingredient",ingredientsData)
-                db.addRestes(["title"]+generalInfoItems+ingredients+["preparationProcess"],[title]+generalInfoData+ingredientsData+[preparationProcess])
+                db.addRestes(dbitems,[title]+generalInfoData+ingredientsData+[preparationProcess]+[session["user"]])
         return render_template("add_recipe.html")
     @app.route(WEBPAGE+"login_.html", methods=['GET', 'POST'])
     def loginInterface():
@@ -99,8 +104,8 @@ class resetes():
         session['user']=""
         return redirect("/")
 #to check
-    @app.route(WEBPAGE+'gas/actualisar<string:id>', methods = ['GET','POST'])
-    def update_gas(id):
+    @app.route(WEBPAGE+"actualisar<string:id>", methods = ['GET','POST'])
+    def update(id):
         user = session.get('user')
         db = dbInteracion(DBNAMEGAS)
         db.connect(TABLEGAS+user)
@@ -115,25 +120,32 @@ class resetes():
             db.updateGas(sentence,id)
             flash(' Updated Successfully')
         return redirect('/gas.html')
-    @app.route(WEBPAGE+'gas/editar<string:id>', methods = ['POST', 'GET'])
+    @app.route(WEBPAGE+"editar<string:id>", methods = ['POST', 'GET'])
     def get_gas(id):
         user = session.get('user')
         db = dbInteracion(DBNAMEGAS)
         db.connect(TABLEGAS+user)
         key = session.get('encpwd')
         keys = len(DATANAMEGAS)*[key]
-        rows = db.getDataGasWhere("item_id",id)[0]
+        rows = db.getDataGasWhere(id,"id")[0]
         idData = [id]+list(map(decryptAES,rows,keys))
         del key,keys , user , rows
         return render_template('gas_update.html', purchase = idData )
-    @app.route(WEBPAGE+"gas/eliminar/<string:id>", methods = ['GET','POST'])
-    def gassdelete(id):
-        user = session.get('user')
-        db = dbInteracion(DBNAMEGAS)
-        db.connect(TABLEGAS+user)
-        db.deleteWhere("item_id",id)
-        #flash('you delete that')
-        return redirect('/gas.html')
+    @app.route(WEBPAGE+"eliminar/<string:id>", methods = ['GET','POST'])
+    def delete(id):
+        db=dbInteracion(DBNAME)
+        db.connect(TABLE)
+        print("get req")
+        print(session.get('user'),db.authChange(id))
+        if session.get('user')==db.authChange(id):
+            db.deleteWhere(id)
+            flash("Delete success")
+        else:
+            
+             #redirect(WEBPAGE+"login.html")
+            return render_template_string("{% extends  'template.html'%}{% block content %}<center><br><br><br><br><h1>You need autheticate to delete something<br><br><a href='/login.html'>Autheticate here</a></h1></center>{% endblock%}")
+        return redirect(WEBPAGE)
+
 #finish cheking
 if __name__=='__main__':
     app.run(debug=True,host="127.0.0.1",port=9600)

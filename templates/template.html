@@ -5,19 +5,20 @@
     <title>Resetes</title>
 </head>
 <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css')}}">
-<body>
-<ul class="bar">
-			<li><a href="/">Informacion</a></li>
-			<li><a href="/addResetes.html">Añadir reseta</a></li>
-			<li><a href="/register.html">Crear usuario</a></li>
-			<li><a href="/login.html">Login</a></li>
-			<li><a href="/byebye.html">Cerrar session</a></li>
-</ul>
-<br>
-<br>
-<br>		
-{% block content %}
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<body class=".ownbody">
+		<ul class="bar">
+					<li><a href="/">Informacion</a></li>
+					<li><a href="/addResetes.html">Añadir reseta</a></li>
+					<li><a href="/register.html">Crear usuario</a></li>
+					<li><a href="/login.html">Login</a></li>
+					<li><a href="/byebye.html">Cerrar session</a></li>
+		</ul>
+		<br>
+		<br>
+		<br>		
+		{% block content %}
 
-{% endblock %}
+		{% endblock %}
 </body>
 </html>

@@ -14,7 +14,7 @@ pagina principal
 <p class="title">
 {{ i.1 }}
 </p>
-<h5><a href="{{ i.0 }}">editar</a>  <a href="">eliminar</a></h5>
+<h5><a href="eliminar/{{ i.0 }}">editar</a>   <a href="eliminar/{{ i.0 }}">eliminar</a></h5>
 <div id="generalInfo">	
 	<table border="1" id="table1">
 		<tr class="columnHead">
@@ -61,9 +61,12 @@ pagina principal
 			</th>
 		</tr>
 		<tr>
-			<td class="tabledata">
+			<td class=".bg-light">
 				<br>
-				{{ i.9 }}
+					{{ i.9 }}
+				<br>
+				<br>
+					hecho por {{ i.10 }}
 				<br>
 			</td>
 		</tr>
