@@ -17,7 +17,7 @@ TABLE="publicResipes"
 app=Flask(__name__)
 app.secret_key = str(enPassowrdHash(generatePassword()))
 generalInfoItems=["typeFood","amoutPersons","origin"]
-ingredients=["amout","amoutUnit","ingredient","notes"]
+ingredients=["amout","amoutUnit","ingredient","price","notes"]
 WEBPAGE="/"
 dbitems=["title"]+generalInfoItems+ingredients+["preparationProcess"]+["user"]
 class resetes():
@@ -27,6 +27,7 @@ class resetes():
         db=dbInteracion(DBNAME)
         db.connect(TABLE)
         data=db.getData()
+        print(data)
         return render_template("resetes.html",data=data)
     @app.route(WEBPAGE+"addResetes.html", methods=['GET','POST'])
     def addResipe():
@@ -39,13 +40,11 @@ class resetes():
             if request.method=='POST':
                 rows=int(request.form['amoutRows'])
                 title=request.form['title']
-                preparationProcess=request.form['preparationProcess']
+                #preparationProcess=request.form['preparationProcess']
+                preparationProcess=request.form['preparationProcess'].replace("\t"," ").replace("\r"," ").replace("\n","<br>")
                 generalInfoData=multRequest(generalInfoItems)
                 ingredientsData=requestIngredients(ingredients,rows)
                 print("\n",ingredients,rows,"\n")
-                #remvomeChars=maketrans("\n\t\r","   ")
-                #request.form['preparationProcess']#.translate(remvomeChars)
-
                 print("titulo",title)
                 print("notas de preparacion",preparationProcess)
                 print("general info",generalInfoData)
@@ -75,7 +74,7 @@ class resetes():
             else:
                 msjError="Contraseña invalida!"
         return render_template("login.html",error=msjError) 
-    @app.route(WEBPAGE+"register.html", methods = ['GET','POST'])
+    @app.route(WEBPAGE+"register.html", methods=['GET','POST'])
     def register():
         #ok
         msjError=""
@@ -104,14 +103,14 @@ class resetes():
         session['user']=""
         return redirect("/")
 #to check
-    @app.route(WEBPAGE+"actualisar<string:id>", methods = ['GET','POST'])
-    def update(id):
+    @app.route(WEBPAGE+"actualisar/<string:id>", methods=['GET','POST'])
+    def doUpdate(id):
         user = session.get('user')
         db = dbInteracion(DBNAMEGAS)
         db.connect(TABLEGAS+user)
         key = session.get('encpwd')
         keys = len(DATANAMEGAS)*[key]
-        if request.method == 'POST':
+        if request.method=='POST':
             data = multrequest(DATANAMEGAS)
             encdata = list(map(encryptAES , data, keys))
             encdata = list(map(str,encdata))
@@ -119,33 +118,29 @@ class resetes():
             sentence = setUpdate(DATANAMEGAS,encdata)
             db.updateGas(sentence,id)
             flash(' Updated Successfully')
-        return redirect('/gas.html')
-    @app.route(WEBPAGE+"editar<string:id>", methods = ['POST', 'GET'])
-    def get_gas(id):
-        user = session.get('user')
-        db = dbInteracion(DBNAMEGAS)
-        db.connect(TABLEGAS+user)
-        key = session.get('encpwd')
-        keys = len(DATANAMEGAS)*[key]
-        rows = db.getDataGasWhere(id,"id")[0]
-        idData = [id]+list(map(decryptAES,rows,keys))
-        del key,keys , user , rows
-        return render_template('gas_update.html', purchase = idData )
-    @app.route(WEBPAGE+"eliminar/<string:id>", methods = ['GET','POST'])
+        return redirect(WEBPAGE)
+    @app.route(WEBPAGE+"editar/<string:id>", methods=['POST', 'GET'])
+    def update(id):
+        db=dbInteracion(DBNAME)
+        db.connect(TABLE)
+        rows=db.getDataWhere(id,"id")
+        if session.get("user")==db.authChange(id):
+            pass
+            #db.deleteWhere(id)
+        return render_template("update.html",data=rows[0])
+#finish cheking
+    @app.route(WEBPAGE+"eliminar/<string:id>", methods=['GET','POST'])
     def delete(id):
         db=dbInteracion(DBNAME)
         db.connect(TABLE)
-        print("get req")
-        print(session.get('user'),db.authChange(id))
-        if session.get('user')==db.authChange(id):
+        if session.get("user")==db.authChange(id):
             db.deleteWhere(id)
             flash("Delete success")
         else:
-            
              #redirect(WEBPAGE+"login.html")
-            return render_template_string("{% extends  'template.html'%}{% block content %}<center><br><br><br><br><h1>You need autheticate to delete something<br><br><a href='/login.html'>Autheticate here</a></h1></center>{% endblock%}")
+            return render_template_string("{% extends  'template.html'%}{% block content %}<center><br><br><br><br><h1>Nesitas auteticacion para eliminar<br><br><a href='/login.html'>logearse</a></h1></center>{% endblock%}")
         return redirect(WEBPAGE)
-
-#finish cheking
+#add manifest
+#add voice resetes
 if __name__=='__main__':
-    app.run(debug=True,host="127.0.0.1",port=9600)
+    app.run(debug=True,host="0.0.0.0",port=9600)

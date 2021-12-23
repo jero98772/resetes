@@ -16,10 +16,17 @@ def multRequest(items):
 def requestIngredients(items,amount): 
     values=[]
     ii=0
+    print("requestIngredients")
     for item in items:      
         tmpArray=[]
-        for i in range(1,amount):
-            tmpArray.append(request.form.get(item+str(i)))
+        if amount==1:
+            for i in range(1,amount+1):
+                print(item,request.form.get(item+str(i)))
+                tmpArray.append(request.form.get(item+str(i)))
+        else:
+            for i in range(1,amount):
+                print(item,request.form.get(item+str(i)))
+                tmpArray.append(request.form.get(item+str(i)))
         values.append(str(tmpArray)[1:-1])
     return values
 def enPassowrdStrHex(password):

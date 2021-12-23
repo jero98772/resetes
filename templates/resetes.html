@@ -4,7 +4,7 @@
 <center>
 <em>
 <p class="title">
-pagina principal
+Resetario de lela
 </p>
 <br>
 </em>
@@ -14,7 +14,7 @@ pagina principal
 <p class="title">
 {{ i.1 }}
 </p>
-<h5><a href="eliminar/{{ i.0 }}">editar</a>   <a href="eliminar/{{ i.0 }}">eliminar</a></h5>
+<h5><a href="editar/{{ i.0 }}">editar</a>   <a href="eliminar/{{ i.0 }}">eliminar</a></h5>
 <div id="generalInfo">	
 	<table border="1" id="table1">
 		<tr class="columnHead">
@@ -31,23 +31,28 @@ pagina principal
 </div>
 <br>
 <div id="ingredients">
+
 	<table border="1">
 		<tr class="columnHead">
 			<th><b>Cantidad</b></th>
 			<th><b>Medida</b></th>
 			<th><b>Ingrediente</b></th>
+			<th><b>Precio</b></th>
 			<th><b>Observaciones</b></th>
 		</tr>
 		{% set list1 = i.5.split(',') %}
 		{% set list2 = i.6.split(',') %}
 		{% set list3 = i.7.split(',') %}
 		{% set list4 = i.8.split(',') %}
+		{% set list5 = i.9.split(',') %}
+
 		{% for ii in range(list3|length) %}
 			<tr>
 				<td class="tabledata">{{ list1[ii] | replace("'", "")}}</td>
 				<td class="tabledata">{{ list2[ii] | replace("'", "")}}</td>
 				<td class="tabledata">{{ list3[ii] | replace("'", "")}}</td>
 				<td class="tabledata">{{ list4[ii] | replace("'", "")}}</td>
+				<td class="tabledata">{{ list5[ii] | replace("'", "")}}</td>
 			</tr>
 		{% endfor %}
 	</table>
@@ -61,13 +66,14 @@ pagina principal
 			</th>
 		</tr>
 		<tr>
-			<td class=".bg-light">
-				<br>
-					{{ i.9 }}
-				<br>
-				<br>
-					hecho por {{ i.10 }}
-				<br>
+			<td>
+				<div class="p-3 mb-2 bg-white text-dark">
+						{{ i.10|safe }}
+					<br>
+					<br>
+						hecho por {{ i.11 }}
+					<br>
+				</div>
 			</td>
 		</tr>
 	</table>

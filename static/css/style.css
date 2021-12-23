@@ -1,5 +1,5 @@
-.ownbody body {
-  background-color: #CFD8DC;
+body {
+  background-color:#CFD8DC !important;
   color:#43A047;
 }
 * {

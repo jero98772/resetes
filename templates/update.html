@@ -1,4 +1,76 @@
 {% extends  'template.html'%}
 {% block content %}
+<p class="title">
+Titulo
+<p>
+<form action="/actualisar/{{ data.0 }}" method="POST">
+<input type="text" name="title" value="{{ data.1 }}"></p>
+<br>
+</p>
+</em>
+<div id="generalInfo">	
+	<table border="1" id="table1">
+		<tr class="columnHead">
+			<th><b>Tipo de plato</b></th>
+			<th><b>N° personas</b></th>
+			<th><b>Procedencia</b></th>
+		</tr>
+		<tr>
+			<td><input type="text" name="typeFood" value="{{ data.2 }}"></td>
+			<td><input type="text" name="amoutPersons" value="{{ data.3 }}"></td>
+			<td><input type="text" name="origin" placeholder="colombia" value="{{ data.4 }}"></td>
+		</tr>
+	</table>
+</div>
+<br>
+<div id="ingredients">
+	<table border="1">
+		<tr class="columnHead">
+			<th><b>Cantidad</b></th>
+			<th><b>Medida</b></th>
+			<th><b>Ingrediente</b></th>
+			<th><b>Precio</b></th>
+			<th><b>Observaciones</b></th>
+		</tr>
+		{% set list1 = data.5.split(',') %}
+		{% set list2 = data.6.split(',') %}
+		{% set list3 = data.7.split(',') %}
+		{% set list4 = data.8.split(',') %}
+		{% set list5 = data.9.split(',') %}
 
+		{% for i in range(list3|length) %}
+			{% set val1 = list1[i]| replace("'", "")%}
+			{% set val2 = list2[i] | replace("'", "")%}
+			{% set val3 = list3[i] | replace("'", "")%}
+			{% set val4 = list4[i] | replace("'", "")%}
+			{% set val5 = list5[i] | replace("'", "")%}
+			<tr>
+				<td><input type="text" name="amout{{ i+1 }}" value="{{ val1 }}"></td>
+				<td><input type="text" name="amoutUnit{{ i+1 }}" placeholder="cdta/gr/ml..." value="{{ val2 }}"></td>
+				<td><input type="text" name="ingredient{{ i+1 }}" value="{{ val3 }}"></td>
+				<td><input type="text" name="price{{ i+1 }}" value="{{ val4 }}"></td>
+				<td><input type="text" name="notes{{ i+1 }}" value="{{ val5 }}"></td>		
+			</tr>
+		{% endfor %}
+	</table>
+<input type="text"id="amoutRows" name="amoutRows" value="1" hidden>
+</div>
+<br>
+<div id="preparation">
+	<table class="tablePreparation">
+		<tr>
+			<th>
+				<p class="preparationTitle">preparacion</p>
+			</th>
+		</tr>
+		<tr>
+			<td>
+				<textarea name="preparationProcess" rows="10" cols="100">{{ data.10 }}</textarea>
+			</td>
+		</tr>
+	</table>
+</div>
+<input type="submit" value="Actualisar reseta" style="height:45px;width:100px">
+</table>
+</form>
 {% endblock %}

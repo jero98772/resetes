@@ -1,12 +1,12 @@
 {% extends  'template.html'%}
 {% block content %}
 <br>
-<center>
 <em>
 <p class="title">
-titulo
+Titulo
+<p>
 <form method="POST" action="/addResetes.html" >
-<p><input type="text" name="title"></p>
+<input type="text" name="title"></p>
 <script type="text/javascript" src="{{ url_for('static', filename='js/tools.js')}}"></script>
 <br>
 </p>
@@ -32,6 +32,7 @@ titulo
 			<th><b>Cantidad</b></th>
 			<th><b>Medida</b></th>
 			<th><b>Ingrediente</b></th>
+			<th><b>Precio</b></th>
 			<th><b>Observaciones</b></th>
 			<b><input type="button" onclick ="addRow()" value="nueva fila"></b>
 		</tr>
@@ -39,6 +40,7 @@ titulo
 			<td><input type="text" name="amout1"></td>
 			<td><input type="text" name="amoutUnit1" placeholder="cdta/gr/ml..."></td>
 			<td><input type="text" name="ingredient1"></td>
+			<td><input type="text" name="price1"></td>
 			<td><input type="text" name="notes1"></td>
 			
 		</tr>
@@ -62,6 +64,5 @@ titulo
 </div>
 <input type="submit" value="enviar reseta" style="height:45px;width:100px">
 </form>
-</center>
 
 {% endblock %}

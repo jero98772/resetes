@@ -65,9 +65,9 @@ class dbInteracion():
 		print(dbcomand)
 		self.cursor.execute(dbcomand)
 		self.cursor.connection.commit()
-	def getDataResetesWhere(self,row,equals):
+	def getDataWhere(self,row,equals):
 		dbcomand = "SELECT * FROM {0} WHERE {1} = {2} ;".format(self.tableName,row,equals)
-		self.cursor.row_factory = lambda cursor, row: list(row[1:])
+		self.cursor.row_factory = lambda cursor, row: list(row[0:])#puede ser row,unicamente pero por razones de prueba esta asi
 		self.cursor.execute(dbcomand)
 		alldata = self.cursor.fetchall()
 		return alldata
