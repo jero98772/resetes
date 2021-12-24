@@ -4,7 +4,7 @@ es un regalo de navidad a la vez que un resetario para compartir resetas, se cre
 
 **aspecto del libro:**
 
-![Screenshot0](https://github.com/jero98772/resetes/blob/main/docs/screenshots/0.png?raw=true)
+![Screenshot0](https://github.com/jero98772/resetes/blob/main/docs/screenshots/0.jpg?raw=true)
 
 
 es una pagina sobre flask , compatible con dispositivos moviles(interfas responsive) y con capacidad de manejar varios usuarios.

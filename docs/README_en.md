@@ -5,7 +5,7 @@ is a christmas gift as well as a resetario to share recipes, it was created beca
 
 **the Book:**
 
-![Screenshot0](https://github.com/jero98772/resetes/blob/main/docs/screenshots/0.png?raw=true)
+![Screenshot0](https://github.com/jero98772/resetes/blob/main/docs/screenshots/0.jpg?raw=true)
 
 is a website about flask, compatible with mobile devices (responsive interface) and with the ability to manage multiple users.
 
