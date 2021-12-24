@@ -32,7 +32,7 @@ class dbInteracion():
 		self.cursor.execute(insertUser,(usr,pwd))
 		self.cursor.connection.commit()
 	def createUser(self,usr,salt="resetes"):
-		dbcomand='CREATE TABLE "{0}{1}" ("id"	INTEGER,"title"	TEXT,"typeFood"	TEXT,"amoutPersons"	INTEGER,"origin"	TEXT,"amouts"	TEXT,"amoutUnits"	TEXT,"ingredients"	TEXT,"notes"TEXT ,user TEXT,PRIMARY KEY("id" AUTOINCREMENT));'
+		dbcomand='CREATE TABLE "{0}{1}" ("id"	INTEGER,"title"	TEXT,"typeFood"	TEXT,"amoutPersons"	INTEGER,"origin"	TEXT,"amouts"	TEXT,"amoutUnits"	TEXT,"ingredients"	TEXT,"notes"TEXT ,user TEXT,"rows"	INTEGER,PRIMARY KEY("id" AUTOINCREMENT));'
 		self.cursor.execute(dbcomand)
 		self.cursor.connection.commit()
 	def findUser(self,user):
@@ -61,8 +61,8 @@ class dbInteracion():
 			return False
 	
 	def addRestes(self,dbItems,data ):
-		dbcomand = str("INSERT INTO {0} {1}  VALUES {2} ;".format(self.tableName,tuple(dbItems),tuple(data)))
-		print(dbcomand)
+		dbcomand = str("INSERT INTO {0} {1} VALUES {2};".format(self.tableName,tuple(dbItems),tuple(data)))
+		#print(dbcomand)
 		self.cursor.execute(dbcomand)
 		self.cursor.connection.commit()
 	def getDataWhere(self,row,equals):
@@ -79,13 +79,12 @@ class dbInteracion():
 		alldata = self.cursor.fetchall()
 		return alldata
 		self.cursor.row_factory = sqlite3.Row
-	def update(self,updateSentence, id):
-		dbcomand = str("UPDATE {0} SET {1} WHERE item_id = {2}; ".format((self.tableName),updateSentence,id))
+	def update(self,updateSentence, id,idtxt="id"):
+		dbcomand = str("UPDATE {0} SET {1} WHERE {3} = {2}; ".format((self.tableName),updateSentence,id,idtxt))
 		self.cursor.execute(dbcomand)
 		self.cursor.connection.commit()
 	def authChange(self,id,column="id",usr="user"):
 		dbcomand = "SELECT {0} FROM {2} WHERE {1} = {3};".format(usr,column,self.tableName,id)
-		print(dbcomand)
 		self.cursor.row_factory = lambda cursor, row: list(row)
 		self.cursor.execute(dbcomand)
 		user = self.cursor.fetchall()

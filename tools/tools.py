@@ -15,18 +15,17 @@ def multRequest(items):
     return values
 def requestIngredients(items,amount): 
     values=[]
-    ii=0
-    print("requestIngredients")
     for item in items:      
         tmpArray=[]
         if amount==1:
             for i in range(1,amount+1):
-                print(item,request.form.get(item+str(i)))
+                #print(item,request.form.get(item+str(i)))
                 tmpArray.append(request.form.get(item+str(i)))
         else:
             for i in range(1,amount):
-                print(item,request.form.get(item+str(i)))
+                #print(item,request.form.get(item+str(i)))
                 tmpArray.append(request.form.get(item+str(i)))
+            #debugshit(tmpArray)
         values.append(str(tmpArray)[1:-1])
     return values
 def enPassowrdStrHex(password):
@@ -51,3 +50,11 @@ def generatePassword():
         else:
             break
     return enPassowrdStrHex(genPassowrd)
+def setUpdate(dataname, data):
+    sentence=dataname[0]+"="+'"'+data[0]+'"'
+    for i,ii in zip(dataname[1:],data[1:]):
+        sentence+=','+i+"="+'"'+ii+'"'
+    return sentence
+def debugshit(arr):
+    for i in arr:
+        print([str(i).replace(" ","-")])

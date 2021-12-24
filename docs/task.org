@@ -8,8 +8,11 @@
 
 https://stackoverflow.com/questions/5669905/sqlite-with-encryption-password-protection
 * TODOS
-** ortografia
-** todo español
-** terminar edit
-** boostrap
+** corregir ortografia
+** DONE todo español 
+** DONE terminar edit
+** DONE boostrap
+** DONE diseño movil
 ** añadir restas
+** TODO ver y solucionar por que añade un espacio apartir de la fila 2
+** añadir resetas en vos a texto

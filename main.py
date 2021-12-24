@@ -19,7 +19,7 @@ app.secret_key = str(enPassowrdHash(generatePassword()))
 generalInfoItems=["typeFood","amoutPersons","origin"]
 ingredients=["amout","amoutUnit","ingredient","price","notes"]
 WEBPAGE="/"
-dbitems=["title"]+generalInfoItems+ingredients+["preparationProcess"]+["user"]
+dbitems=["title"]+generalInfoItems+ingredients+["preparationProcess"]+["user"]+["rows"]
 class resetes():
     @app.route(WEBPAGE)
     def resetes():
@@ -27,7 +27,6 @@ class resetes():
         db=dbInteracion(DBNAME)
         db.connect(TABLE)
         data=db.getData()
-        print(data)
         return render_template("resetes.html",data=data)
     @app.route(WEBPAGE+"addResetes.html", methods=['GET','POST'])
     def addResipe():
@@ -44,12 +43,7 @@ class resetes():
                 preparationProcess=request.form['preparationProcess'].replace("\t"," ").replace("\r"," ").replace("\n","<br>")
                 generalInfoData=multRequest(generalInfoItems)
                 ingredientsData=requestIngredients(ingredients,rows)
-                print("\n",ingredients,rows,"\n")
-                print("titulo",title)
-                print("notas de preparacion",preparationProcess)
-                print("general info",generalInfoData)
-                print("ingredient",ingredientsData)
-                db.addRestes(dbitems,[title]+generalInfoData+ingredientsData+[preparationProcess]+[session["user"]])
+                db.addRestes(dbitems,[title]+generalInfoData+ingredientsData+[preparationProcess]+[session["user"]]+[rows])
         return render_template("add_recipe.html")
     @app.route(WEBPAGE+"login_.html", methods=['GET', 'POST'])
     def loginInterface():
@@ -105,30 +99,31 @@ class resetes():
 #to check
     @app.route(WEBPAGE+"actualisar/<string:id>", methods=['GET','POST'])
     def doUpdate(id):
-        user = session.get('user')
-        db = dbInteracion(DBNAMEGAS)
-        db.connect(TABLEGAS+user)
-        key = session.get('encpwd')
-        keys = len(DATANAMEGAS)*[key]
         if request.method=='POST':
-            data = multrequest(DATANAMEGAS)
-            encdata = list(map(encryptAES , data, keys))
-            encdata = list(map(str,encdata))
-            del key,keys,data
-            sentence = setUpdate(DATANAMEGAS,encdata)
-            db.updateGas(sentence,id)
-            flash(' Updated Successfully')
+            db=dbInteracion(DBNAME)
+            db.connect(TABLE)
+            if session.get("user")==db.authChange(id):
+                rows=int(request.form['amoutRows'])
+                title=request.form['title']
+                preparationProcess=request.form['preparationProcess'].replace("\t"," ").replace("\r"," ").replace("\n","<br>")
+                generalInfoData=multRequest(generalInfoItems)
+                ingredientsData=requestIngredients(ingredients,rows+1)
+                #debugshit(ingredientsData)
+                sentence=setUpdate(dbitems,[title]+generalInfoData+ingredientsData+[preparationProcess]+[session["user"]]+[str(rows)])
+                db.update(sentence,id)
         return redirect(WEBPAGE)
+#finish cheking
     @app.route(WEBPAGE+"editar/<string:id>", methods=['POST', 'GET'])
     def update(id):
+        #ok
+        msjError=""
         db=dbInteracion(DBNAME)
         db.connect(TABLE)
         rows=db.getDataWhere(id,"id")
-        if session.get("user")==db.authChange(id):
-            pass
-            #db.deleteWhere(id)
-        return render_template("update.html",data=rows[0])
-#finish cheking
+        if session.get("user")!=db.authChange(id):
+            msjError="Nesitas auteticacion para editar,con el usuario que escribio la receta."
+        #debugshit(rows[0])
+        return render_template("update.html",data=rows[0],error=msjError)
     @app.route(WEBPAGE+"eliminar/<string:id>", methods=['GET','POST'])
     def delete(id):
         db=dbInteracion(DBNAME)
@@ -136,9 +131,11 @@ class resetes():
         if session.get("user")==db.authChange(id):
             db.deleteWhere(id)
             flash("Delete success")
+        elif session.get("user")=="" :
+             return render_template_string("{% extends  'template.html'%}{% block content %}<center><br><br><br><br><h1><div class='required'><p><strong>Error:</strong>Nesitas auteticacion para eliminar.</div><br><br><a href='/login.html'>autenticarse</a></h1></center>{% endblock%}")
         else:
              #redirect(WEBPAGE+"login.html")
-            return render_template_string("{% extends  'template.html'%}{% block content %}<center><br><br><br><br><h1>Nesitas auteticacion para eliminar<br><br><a href='/login.html'>logearse</a></h1></center>{% endblock%}")
+            return render_template_string("{% extends  'template.html'%}{% block content %}<center><br><br><br><br><h1><div class='required'><p><strong>Error:</strong>Nesitas auteticacion con el usuario que escribio la receta.</div></h1></center>{% endblock%}")
         return redirect(WEBPAGE)
 #add manifest
 #add voice resetes

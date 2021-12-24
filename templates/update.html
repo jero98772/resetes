@@ -3,7 +3,14 @@
 <p class="title">
 Titulo
 <p>
-<form action="/actualisar/{{ data.0 }}" method="POST">
+{% if not error=="" %}
+    <h2>
+	    <div class="required"><p><strong>Error:</strong> {{ error }}</div>
+	    <a href='/login.html'>Autenticarse aqui</a>
+    </h2>
+ {% else %}
+	<form action="/actualisar/{{ data.0 }}" method="POST">
+{% endif %}
 <input type="text" name="title" value="{{ data.1 }}"></p>
 <br>
 </p>
@@ -37,13 +44,13 @@ Titulo
 		{% set list3 = data.7.split(',') %}
 		{% set list4 = data.8.split(',') %}
 		{% set list5 = data.9.split(',') %}
-
+<!--probalblemente el espaciado demas este en este aqui, por que se lo añade despues de haberse ingresado en la base de datos-->
 		{% for i in range(list3|length) %}
-			{% set val1 = list1[i]| replace("'", "")%}
-			{% set val2 = list2[i] | replace("'", "")%}
-			{% set val3 = list3[i] | replace("'", "")%}
-			{% set val4 = list4[i] | replace("'", "")%}
-			{% set val5 = list5[i] | replace("'", "")%}
+			{% set val1 = list1[i]|replace("'","")%}
+			{% set val2 = list2[i]|replace("'","")%}
+			{% set val3 = list3[i]|replace("'","")%}
+			{% set val4 = list4[i]|replace("'","")%}
+			{% set val5 = list5[i]|replace("'","")%}
 			<tr>
 				<td><input type="text" name="amout{{ i+1 }}" value="{{ val1 }}"></td>
 				<td><input type="text" name="amoutUnit{{ i+1 }}" placeholder="cdta/gr/ml..." value="{{ val2 }}"></td>
@@ -53,7 +60,7 @@ Titulo
 			</tr>
 		{% endfor %}
 	</table>
-<input type="text"id="amoutRows" name="amoutRows" value="1" hidden>
+<input type="text"id="amoutRows" name="amoutRows" value="{{ data.12 }}" hidden>
 </div>
 <br>
 <div id="preparation">
@@ -70,7 +77,10 @@ Titulo
 		</tr>
 	</table>
 </div>
-<input type="submit" value="Actualisar reseta" style="height:45px;width:100px">
 </table>
+{% if error=="" %}
+<input type="submit" value="Actualisar reseta" style="height:45px;width:160px">
 </form>
+{% endif %}
+
 {% endblock %}
