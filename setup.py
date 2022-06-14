@@ -7,7 +7,7 @@ restes - 2021 - by jero98772
 from setuptools import setup, find_packages
 setup(
 	name='restes',
-	version='1.0.0 beta',
+	version='1.1.0',
 	license='GPLv3',
 	author_email='jero98772@protonmail.com',
 	author='jero98772',
