@@ -51,7 +51,7 @@ class resetes():
         if not session.get('loged'):
             return redirect("login.html")
         else:
-            return "<center><h1>Ya estas logeado</h1></center><br><a href="+WEBPAGE+"profile/"+session["user"]+">tu perfil</a>"
+            return "<center><h1>Ya estas logeado</h1></center>"
     @app.route(WEBPAGE+"login.html", methods=['GET', 'POST'])
     def login():
         msjError=""
@@ -137,20 +137,18 @@ class resetes():
              #redirect(WEBPAGE+"login.html")
             return render_template_string("{% extends  'template.html'%}{% block content %}<center><br><br><br><br><h1><div class='required'><p><strong>Error:</strong>Nesitas auteticacion con el usuario que escribio la receta.</div></h1></center>{% endblock%}")
         return redirect(WEBPAGE)
-    
     @app.route(WEBPAGE+"profile.html", methods=['GET','POST'])
     def userProfile():
-        if session['loged']:
-            return redirect(WEBPAGE+"profile/"+session["user"])
-        else:
+        if not session.get('loged'):
             return render_template_string("{% extends  'template.html'%}{% block content %}<center><br><br><br><br><h1><div class='required'><p><strong>Error:</strong>Nesitas auteticacion.</div></h1></center>{% endblock%}")
+        elif session['loged']:
+            return redirect(WEBPAGE+"profile/"+session["user"])
     @app.route(WEBPAGE+"profile/<string:user>", methods=['GET','POST'])
     def profile(user):
         db=dbInteracion(DBNAME)
         db.connect(TABLE)
         data=db.getDataWhere("user","'"+user+"'")
-        return render_template("profile.html",data=data)
-#add manifest
+        return render_template("profile.html",data=data)#add manifest
 #add voice resetes
 if __name__=='__main__':
     app.run(debug=True,host="0.0.0.0",port=9600)
