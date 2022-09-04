@@ -1,5 +1,8 @@
 # Resetes
 
+![it couldn't get any worse](https://github.com/jero98772/resetes/blob/main/docs/screenshots/logo.png?raw=true)
+
+
 es un regalo de navidad a la vez que un resetario para compartir resetas, se creo por que se queria pasar un libro de resetas a una herramienta digital y generar una comunidad intercambiando resetas.
 
 **aspecto del libro:**
